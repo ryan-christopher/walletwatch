@@ -40,34 +40,37 @@ let priceStyle2 = {
 let sopranoVal = 0;
 let altoVal = 0;
 
+let volNum = 0.5;
+
+
 function App() {
   //const [coins, setCoins] = React.useState(null);
   //const [socketReady, setSocketReady] = React.useState(null)
-  const [playC3] = useSound(c3, { interrupt: true });
-  const [playCs3] = useSound(cs3, { interrupt: true });
-  const [playD3] = useSound(d3, { interrupt: true });
-  const [playEb3] = useSound(eb3, { interrupt: true });
-  const [playE3] = useSound(e3, { interrupt: true });
-  const [playF3] = useSound(f3, { interrupt: true });
-  const [playFs3] = useSound(fs3, { interrupt: true });
-  const [playG3] = useSound(g3, { interrupt: true });
-  const [playGs3] = useSound(gs3, { interrupt: true });
-  const [playA3] = useSound(a3, { interrupt: true });
-  const [playBb3] = useSound(bb3, { interrupt: true });
-  const [playB3] = useSound(b3, { interrupt: true });
-  const [playC4] = useSound(c4, { interrupt: true });
-  const [playCs4] = useSound(cs4, { interrupt: true });
-  const [playD4] = useSound(d4, { interrupt: true });
-  const [playEb4] = useSound(eb4, { interrupt: true });
-  const [playE4] = useSound(e4, { interrupt: true });
-  const [playF4] = useSound(f4, { interrupt: true });
-  const [playFs4] = useSound(fs4, { interrupt: true });
-  const [playG4] = useSound(g4, { interrupt: true });
-  const [playGs4] = useSound(gs4, { interrupt: true });
-  const [playA4] = useSound(a4, { interrupt: true });
-  const [playBb4] = useSound(bb4, { interrupt: true });
-  const [playB4] = useSound(b4, { interrupt: true });
-  const [playC5] = useSound(c5, { interrupt: true });
+  const [playC3] = useSound(c3, { interrupt: true, volume: volNum });
+  const [playCs3] = useSound(cs3, { interrupt: true, volume: volNum });
+  const [playD3] = useSound(d3, { interrupt: true, volume: volNum });
+  const [playEb3] = useSound(eb3, { interrupt: true, volume: volNum });
+  const [playE3] = useSound(e3, { interrupt: true, volume: volNum });
+  const [playF3] = useSound(f3, { interrupt: true, volume: volNum });
+  const [playFs3] = useSound(fs3, { interrupt: true, volume: volNum });
+  const [playG3] = useSound(g3, { interrupt: true, volume: volNum });
+  const [playGs3] = useSound(gs3, { interrupt: true, volume: volNum });
+  const [playA3] = useSound(a3, { interrupt: true, volume: volNum });
+  const [playBb3] = useSound(bb3, { interrupt: true, volume: volNum });
+  const [playB3] = useSound(b3, { interrupt: true, volume: volNum });
+  const [playC4] = useSound(c4, { interrupt: true, volume: volNum });
+  const [playCs4] = useSound(cs4, { interrupt: true, volume: volNum });
+  const [playD4] = useSound(d4, { interrupt: true, volume: volNum });
+  const [playEb4] = useSound(eb4, { interrupt: true, volume: volNum });
+  const [playE4] = useSound(e4, { interrupt: true, volume: volNum });
+  const [playF4] = useSound(f4, { interrupt: true, volume: volNum });
+  const [playFs4] = useSound(fs4, { interrupt: true, volume: volNum });
+  const [playG4] = useSound(g4, { interrupt: true, volume: volNum });
+  const [playGs4] = useSound(gs4, { interrupt: true, volume: volNum });
+  const [playA4] = useSound(a4, { interrupt: true, volume: volNum });
+  const [playBb4] = useSound(bb4, { interrupt: true, volume: volNum });
+  const [playB4] = useSound(b4, { interrupt: true, volume: volNum });
+  const [playC5] = useSound(c5, { interrupt: true, volume: volNum });
 
   const [ethPrice, setEthPrice] = React.useState(null);
   const [btcPrice, setBtcPrice] = React.useState(null);
@@ -167,13 +170,14 @@ function App() {
     //setSocketReady(true);
 
     ws.send(`{
-      "method": "SUBSCRIBE",
-      "params": [
-        "btcusdt@miniTicker",
-        "ethusdt@miniTicker"
-      ],
-      "id": 1
-    }`)
+          "method": "SUBSCRIBE",
+          "params": [
+            "btcusdt@miniTicker",
+            "ethusdt@miniTicker"
+          ],
+          "id": 1
+        }`)
+
 
   };
   ws.onmessage = (message) => {
@@ -193,7 +197,7 @@ function App() {
         else if (sopranoVal > 14) {
           sopranoVal = 1;
         }
-        //sopranoPlay.play((sopranoVal % 14));
+        sopranoPlay.play((sopranoVal % 14));
       }
       else if (currPrice > ethPrice) {
         priceStyle1 = { color: "rgb(42, 222, 42)" };
@@ -204,7 +208,7 @@ function App() {
         else if (sopranoVal > 14) {
           sopranoVal = 1;
         }
-        //sopranoPlay.play((sopranoVal % 14));
+        sopranoPlay.play((sopranoVal % 14));
       }
       setEthPrice(currPrice);
     }
@@ -233,9 +237,6 @@ function App() {
       }
       setBtcPrice(currPrice);
     }
-
-    //console.log("AAHH")
-    //console.log(ws.readyState)
   };
 
   //console.log(ws)
@@ -261,6 +262,8 @@ function App() {
 
         <h3>ETH</h3> <br /> <hr /><span style={priceStyle1}>{ethPrice && !isNaN(ethPrice) ? ethPrice : "---"}</span>
         <h3>BTC</h3> <br /> <hr /><span style={priceStyle2}>{btcPrice && !isNaN(btcPrice) ? btcPrice : "---"}</span>
+
+
         {/* 
         {coins &&
           <div>
@@ -277,5 +280,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
